@@ -1,198 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ashar Tv Panel</title>
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ashar TV | Under Maintenance</title>
   <style>
     body {
       margin: 0;
       padding: 0;
-      background: linear-gradient(to right, #1e3c72, #2a5298);
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #141e30, #243b55);
       color: white;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      min-height: 100vh;
+      justify-content: center;
+      height: 100vh;
       text-align: center;
+    }
+
+    .container {
+      max-width: 600px;
+      padding: 2rem;
+      background-color: rgba(0, 0, 0, 0.5);
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
     }
 
     h1 {
-      font-size: 3em;
-      margin: 20px 0;
-      animation: glow 1.5s infinite alternate;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
     }
 
-    @keyframes glow {
-      from { text-shadow: 0 0 10px #fff; }
-      to { text-shadow: 0 0 20px #ff00ff; }
+    p {
+      font-size: 1.2rem;
+      line-height: 1.6;
     }
 
-    .channels {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      gap: 30px;
-      margin-bottom: 30px;
-      flex-wrap: nowrap;
-      overflow-x: auto;
-    }
-
-    .channel {
-      cursor: pointer;
-      text-align: center;
-      transition: transform 0.3s;
-    }
-
-    .channel:hover {
-      transform: scale(1.1);
-    }
-
-    .channel img {
-      width: 100px;
-      height: 70px;
-      object-fit: contain;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-      background: white;
-      padding: 5px;
-      margin-bottom: 5px;
-    }
-
-    .channel-name {
-      font-size: 1em;
-    }
-
-    .video-wrapper {
-      width: 100%;
-      max-width: 800px;
-      height: 450px;
-      margin: 20px auto;
-      background: black;
-      border-radius: 12px;
-      overflow: hidden;
-    }
-
-    #video {
-      width: 100%;
-      height: 100%;
-      object-fit: contain; /* ✅ fixed here */
-      border: none;
-      border-radius: 12px;
-      background: black;
-    }
-
-    .note {
-      background: white;
-      color: black;
-      padding: 10px 20px;
-      border-radius: 10px;
-      font-size: 1.1em;
-      text-align: center;
-      margin: 20px auto;
-      max-width: 600px;
-    }
-
-    .bottom-image img {
-      width: 100%;
-      max-width: 800px;
-      height: 450px;
-      object-fit: cover;
-      border-radius: 12px;
-      box-shadow: 0 0 20px #0ff;
-      margin: 20px auto;
-    }
-
-    @media (max-width: 600px) {
-      .channel img {
-        width: 80px;
-        height: 60px;
-      }
-
-      .video-wrapper {
-        height: 240px;
-      }
-
-      .bottom-image img {
-        height: auto;
-      }
+    .logo {
+      font-size: 3rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      color: #ffcc00;
     }
   </style>
 </head>
 <body>
-
-  <h1>Ashar Tv</h1>
-
-  <div class="channels" id="channels"></div>
-
-  <div class="video-wrapper">
-    <video id="video" controls autoplay></video>
+  <div class="container">
+    <div class="logo">Ashar TV</div>
+    <h1>We’ll Be Back Soon</h1>
+    <p>
+      Our website is currently undergoing scheduled maintenance.<br>
+      We appreciate your patience and understanding.<br><br>
+      Please check back later.
+    </p>
   </div>
-
-  <div class="note">It works free on Jazz without data</div>
-
-  <div class="bottom-image">
-    <img src="https://i.postimg.cc/0NQGGS5m/Screenshot-20240207-093833.jpg" alt="Neon Image" />
-  </div>
-
-  <script>
-    const channels = [
-      {
-        name: "Ten Sports",
-        url: "https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/157-3H/playlist.m3u8",
-        logo: "https://i.postimg.cc/y8188fvb/Ten-Sports-Logo.png"
-      },
-      {
-        name: "Makkah Live",
-        url: "https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/141M/playlist.m3u8",
-        logo: "https://i.postimg.cc/mrrk8d9H/unnamed.png"
-      },
-      {
-        name: "Hum TV",
-        url: "https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/humTV-abr/playlist.m3u8",
-        logo: "https://i.postimg.cc/02qNL5mx/Hum-TV-2013.png"
-      }
-    ];
-
-    const channelsDiv = document.getElementById("channels");
-    const video = document.getElementById("video");
-    let hls;
-
-    function playChannel(url) {
-      if (hls) {
-        hls.destroy();
-      }
-
-      if (Hls.isSupported()) {
-        hls = new Hls();
-        hls.loadSource(url);
-        hls.attachMedia(video);
-        hls.on(Hls.Events.MANIFEST_PARSED, function () {
-          video.play();
-        });
-      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-        video.src = url;
-        video.addEventListener('loadedmetadata', function () {
-          video.play();
-        });
-      }
-    }
-
-    channels.forEach(channel => {
-      const div = document.createElement("div");
-      div.className = "channel";
-      div.innerHTML = `
-        <img src="${channel.logo}" alt="${channel.name}">
-        <div class="channel-name">${channel.name}</div>
-      `;
-      div.addEventListener("click", () => playChannel(channel.url));
-      channelsDiv.appendChild(div);
-    });
-
-    playChannel(channels[0].url);
-  </script>
-
 </body>
 </html>
